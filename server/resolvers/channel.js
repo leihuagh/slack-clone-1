@@ -14,7 +14,7 @@ export default {
         console.log(err);
         return {
           return: false,
-          errors: formatErrors(err),
+          errors: formatErrors(err, models),
         };
       }
     },

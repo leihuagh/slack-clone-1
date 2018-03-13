@@ -1,10 +1,7 @@
 import React from 'react';
-// import { extendObservable } from 'mobx';
-// import { observer } from 'mobx-react';
-// import { Message, Form, Container, Header, Input, Button } from 'semantic-ui-react';
 import { graphql } from 'react-apollo';
 import findIndex from 'lodash/findIndex';
-// import gql from 'graphql-tag';
+import { Redirect } from 'react-router-dom';
 
 import AppLayout from '../components/AppLayout';
 import Header from '../components/Header';
@@ -18,9 +15,16 @@ const ViewTeam = ({ data: { loading, allTeams }, match: { params: { teamId, chan
     return null;
   }
 
-  const teamIdx = teamId ? findIndex(allTeams, ['id', parseInt(teamId, 10)]) : 0;
+  if (!allTeams.length) {
+    return <Redirect to="/create-team" />;
+  }
+
+  const teamIdInteger = parseInt(teamId, 10);
+  const teamIdx = teamIdInteger ? findIndex(allTeams, ['id', teamIdInteger]) : 0;
   const team = allTeams[teamIdx];
-  const channelIdx = channelId ? findIndex(team.channels, ['id', parseInt(channelId, 10)]) : 0;
+
+  const channelIdInteger = parseInt(channelId, 10);
+  const channelIdx = channelIdInteger ? findIndex(team.channels, ['id', channelIdInteger]) : 0;
   const channel = team.channels[channelIdx];
 
   return (
@@ -32,14 +36,16 @@ const ViewTeam = ({ data: { loading, allTeams }, match: { params: { teamId, chan
         }))}
         team={team}
       />
-      <Header channelName={channel.name} />
-      <Messages>
-        <ul className="message-list">
-          <li />
-          <li />
-        </ul>
-      </Messages>
-      <SendMessage channelName={channel.name} />
+      {channel && <Header channelName={channel.name} />}
+      {channel && (
+        <Messages>
+          <ul className="message-list">
+            <li />
+            <li />
+          </ul>
+        </Messages>
+      )}
+      {channel && <SendMessage channelName={channel.name} />}
     </AppLayout>
   );
 };
