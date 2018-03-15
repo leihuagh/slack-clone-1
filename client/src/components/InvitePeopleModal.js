@@ -69,7 +69,7 @@ export default compose(
         variables: { teamId, email: values.email },
       });
 
-      const { ok, errors } = response.data.addTeamMember;
+      const { errors } = response.data.addTeamMember;
 
       if (errors) {
         setSubmitting(false);

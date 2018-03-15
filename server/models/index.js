@@ -4,7 +4,7 @@ const sequelize = new Sequelize('slack', 'postgres', 'postgres', {
   dialect: 'postgres',
   operatorsAliases: Sequelize.Op,
   define: {
-    undercored: true,
+    underscored: true,
   },
 });
 

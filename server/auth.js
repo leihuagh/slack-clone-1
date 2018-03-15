@@ -27,7 +27,6 @@ export const createTokens = async (user, secret, secret2) => {
 };
 
 export const refreshTokens = async (token, refreshToken, models, SECRET, SECRET2) => {
-  console.log('FUCKKKKKKKK');
   let userId = 0;
   try {
     const { user: { id } } = jwt.decode(refreshToken);
